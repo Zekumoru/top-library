@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Radio Canada');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Radio Canada';
 }
 
 html, body, .container {
@@ -23,4 +26,8 @@ html, body, .container {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.title, button {
+  text-transform: uppercase;
 }
