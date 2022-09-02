@@ -10,6 +10,7 @@
   --on-button-bg-color: #1BAA03;
   --card-sub-text-color: #939393;
   --card-border-radius: 8px;
+  --icon-size: 28px;
 }
 
 * {
@@ -21,6 +22,19 @@
 
 html, body, .container {
   height: 100%;
+}
+
+.icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+.icon.edit {
+  background-image: url(./svg/pencil.svg);
+}
+
+.icon.delete {
+  background-image: url(./svg/delete.svg);
 }
 
 .container {
@@ -123,4 +137,24 @@ html, body, .container {
 .card .author {
   color: var(--card-sub-text-color);
   font-size: 0.8rem;
+}
+
+.card .buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card .buttons button {
+  padding: 6px;
+  border-radius: var(--icon-size);
+  cursor: pointer;
+}
+
+.card .buttons button:hover {
+  background-color: var(--bg-color);
+}
+
+.card > *:last-child {
+  padding-right: 28px;
 }
