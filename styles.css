@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Radio Canada');
 
+:root {
+  --primary-color: #00A6EF;
+  --primary-text-color: #FFFFFF;
+  --main-color: #FFFFFF;
+  --bg-color: #DFE8F0;
+  --text-color: #000000;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -17,8 +25,9 @@ html, body, .container {
 }
 
 .aside {
-  display: grid;
-  grid-template-rows: 1fr auto;
+  background-color: #00A6EF;
+  color: var(--primary-text-color);
+  position: relative;
 }
 
 .flex-center-vertical {
@@ -28,6 +37,33 @@ html, body, .container {
   align-items: center;
 }
 
-.title, button {
+.header {
+  gap: 16px;
+}
+
+.title, .lib-button {
   text-transform: uppercase;
+}
+
+.title {
+  font-size: 3rem;
+  letter-spacing: 0.2rem;
+}
+
+.lib-button {
+  background-color: var(--main-color);
+  border: none;
+  padding: 12px 36px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.copyright {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 32px;
+  font-size: 0.8rem;
 }
