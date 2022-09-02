@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, .container {
+  height: 100%;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 40% 1fr;
+}
+
+.aside {
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.flex-center-vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
