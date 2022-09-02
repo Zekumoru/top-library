@@ -67,3 +67,7 @@ html, body, .container {
   margin-bottom: 32px;
   font-size: 0.8rem;
 }
+
+.main {
+  background-color: var(--bg-color);
+}
