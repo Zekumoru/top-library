@@ -41,11 +41,11 @@ html, body, .container {
   gap: 16px;
 }
 
-.title, .lib-button {
+.header .title, .lib-button {
   text-transform: uppercase;
 }
 
-.title {
+.header .title {
   font-size: 3rem;
   letter-spacing: 0.2rem;
 }
