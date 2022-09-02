@@ -4,9 +4,11 @@
   --primary-color: #00A6EF;
   --primary-text-color: #FFFFFF;
   --main-color: #FFFFFF;
+  --main-color-hover: #F8F8F8;
   --bg-color: #DFE8F0;
   --text-color: #000000;
   --off-button-bg-color: #EF0000;
+  --off-button-bg-color-hover: #D71B1B;
   --on-button-bg-color: #1BAA03;
   --card-sub-text-color: #939393;
   --card-border-radius: 8px;
@@ -79,6 +81,10 @@ html, body, .container {
   cursor: pointer;
 }
 
+.lib-button:hover {
+  background-color: var(--main-color-hover);
+}
+
 .copyright {
   position: absolute;
   bottom: 0;
@@ -117,7 +123,7 @@ html, body, .container {
   border: none;
 }
 
-.card .read {
+.card button.read {
   background-color: var(--off-button-bg-color);
   color: var(--primary-text-color);
   font-weight: 600;
@@ -126,6 +132,11 @@ html, body, .container {
   padding: 0 48px;
   border-top-left-radius: var(--card-border-radius);
   border-bottom-left-radius: var(--card-border-radius);
+  cursor: pointer;
+}
+
+.card button.read:hover {
+  background-color: var(--off-button-bg-color-hover);
 }
 
 .card .title {
