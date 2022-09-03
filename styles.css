@@ -280,7 +280,7 @@ form.add-book {
   position: relative;
   appearance: none;
   width: 52px;
-  height: 26px;
+  height: 28px;
   background-color: var(--switch-bg-color);
   border-radius: 22px;
   cursor: pointer;
@@ -289,7 +289,7 @@ form.add-book {
 .lib-switch::before {
   position: absolute;
   content: "";
-  top: 2px;
+  top: 3px;
   left: 4px;
   height: 22px;
   width: 22px;
