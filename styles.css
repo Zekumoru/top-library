@@ -113,8 +113,7 @@ html, body, .container {
   height: 80px;
   background-color: var(--main-color);
   display: flex;
-  border-top-right-radius: var(--card-border-radius);
-  border-bottom-right-radius: var(--card-border-radius);
+  border-radius: var(--card-border-radius);
   gap: 20px;
 }
 
