@@ -11,6 +11,31 @@
   </head>
   <body>
     <div class="container">
+      <div class="dialog">
+        <form action="#" class="add-book">
+          <button type="button">&#x2716</button>
+          <h2>Enter Book Details</h2>
+          <ul>
+            <li>
+              <label for="book-name">Name:</label>
+              <input type="text" id="book-name" name="bookName">
+            </li>
+            <li>
+              <label for="book-author">Author:</label>
+              <input type="text" id="book-author" name="bookAuthor">
+            </li>
+            <li>
+              <label for="book-pages">Pages:</label>
+              <input type="number" id="book-pages" name="bookPages">
+            </li>
+            <li>
+              <label for="book-read">Read?</label>
+              <input type="checkbox" id="book-read" name="bookRead">
+            </li>
+          </ul>
+          <button>Add Book</button>
+        </form>
+      </div>
       <aside class="aside flex-center-vertical">
         <header class="header flex-center-vertical">
           <h1 class="title">Library</h1>
