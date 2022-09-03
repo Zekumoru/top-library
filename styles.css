@@ -193,7 +193,26 @@ body > .container {
 }
 
 form.add-book {
+  position: relative;
   background-color: var(--main-color);
   width: 600px;
-  height: 600px;
+  padding: 28px 20px;
+  border-radius: 8px;
+}
+
+.dialog button.close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  background-color: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 32px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.dialog button.close:hover {
+  background-color: var(--bg-color);
 }
