@@ -2,6 +2,7 @@
 
 :root {
   --primary-color: #00A6EF;
+  --primary-color-hover: rgb(9, 161, 226);
   --primary-text-color: #FFFFFF;
   --main-color: #FFFFFF;
   --main-color-hover: #F8F8F8;
@@ -244,4 +245,24 @@ form.add-book {
 .dialog input[type="text"]:focus,
 .dialog input[type="number"]:focus {
   border-color: #3d3d3d;
+}
+
+.lib-button-reverse {
+  background-color: var(--primary-color);
+  border: none;
+  padding: 12px 36px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--main-color);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.lib-button-reverse:hover {
+  background-color: var(--primary-color-hover);
+}
+
+.dialog button.add {
+  align-self: flex-end;
 }
