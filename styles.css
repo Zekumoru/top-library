@@ -190,14 +190,18 @@ body > .container {
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
+  padding: 32px;
 }
 
 form.add-book {
   position: relative;
   background-color: var(--main-color);
   width: 600px;
-  padding: 28px 20px;
+  padding: 28px 24px;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .dialog button.close {
@@ -215,4 +219,29 @@ form.add-book {
 
 .dialog button.close:hover {
   background-color: var(--bg-color);
+}
+
+.dialog .fields {
+  display: grid;
+  gap: 18px;
+  color: #3d3d3d;
+}
+
+.dialog li {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  align-items: center;
+}
+
+.dialog input[type="text"],
+.dialog input[type="number"] {
+  padding: 8px 10px;
+  outline: none;
+  border: 1px solid var(--bg-color);
+  border-radius: 4px;
+}
+
+.dialog input[type="text"]:focus,
+.dialog input[type="number"]:focus {
+  border-color: #3d3d3d;
 }
