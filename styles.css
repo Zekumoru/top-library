@@ -107,6 +107,7 @@ html, body, .container {
 .cards {
   display: grid;
   padding: 40px 36px;
+  gap: 18px;
 }
 
 .card {
