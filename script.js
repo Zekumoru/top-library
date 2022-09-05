@@ -83,8 +83,23 @@ const LibraryRenderer = (() => {
   function createCard(book) {
     const card = document.createElement('li');
     card.classList.add('card');
+
+    const readButton = document.createElement('button');
+    readButton.textContent = book.read? 'read' : 'unread';
+    if (book.read) readButton.classList.add('read');
+
+    readButton.addEventListener('click', () => {
+      if (readButton.textContent === 'read') {
+        readButton.textContent = 'unread';
+        readButton.classList.remove('read');
+        return;
+      }
+
+      readButton.textContent = 'read';
+      readButton.classList.add('read');
+    });
+
     card.innerHTML = `
-      <button class="read">Unread</button>
       <div class="content">
         <h2 class="title">${book.name}</h2>
         <p class="author">${book.author} (${book.pages} pages)</p>
@@ -97,6 +112,8 @@ const LibraryRenderer = (() => {
           <div class="icon delete"></div>
         </button>
       </div>`;
+
+    card.insertBefore(readButton, card.firstChild);
     return card;
   }
 
