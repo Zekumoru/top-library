@@ -2,7 +2,7 @@ const AddBookDialog = (() => {
   const object = {};
   const dialog = document.querySelector('.dialog');
   const inputs = {
-    name: document.querySelector('#book-name'),
+    title: document.querySelector('#book-title'),
     author: document.querySelector('#book-author'),
     pages: document.querySelector('#book-pages'),
     read: document.querySelector('#book-read'),
@@ -27,7 +27,7 @@ const AddBookDialog = (() => {
   }
 
   function clear() {
-    inputs.name.value = '';
+    inputs.title.value = '';
     inputs.author.value = '';
     inputs.pages.value = '';
     inputs.read.checked = false;
@@ -35,7 +35,7 @@ const AddBookDialog = (() => {
 
   function submit() {
     return {
-      name: inputs.name.value,
+      title: inputs.title.value,
       author: inputs.author.value,
       pages: inputs.pages.value || 0,
       read: inputs.read.checked,
@@ -101,7 +101,7 @@ const LibraryRenderer = (() => {
 
     card.innerHTML = `
       <div class="content">
-        <h2 class="title">${book.name}</h2>
+        <h2 class="title">${book.title}</h2>
         <p class="author">${book.author} (${book.pages} pages)</p>
       </div>
       <div class="buttons">
