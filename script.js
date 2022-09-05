@@ -75,8 +75,8 @@ const LibraryRenderer = (() => {
     onchange();
   }
 
-  function remove() {
-    list.removeChild(list.firstChild);
+  function remove(card) {
+    list.removeChild(card);
     onchange();
   }
 
@@ -105,13 +105,22 @@ const LibraryRenderer = (() => {
         <p class="author">${book.author} (${book.pages} pages)</p>
       </div>
       <div class="buttons">
-        <button>
+        <button class="edit">
           <div class="icon edit"></div>
         </button>
-        <button>
+        <button class="remove">
           <div class="icon delete"></div>
         </button>
-      </div>`;
+      </div>`
+    ;
+
+    card.querySelector('button.edit').addEventListener('click', () => {
+      console.log('edit');
+    });
+
+    card.querySelector('button.remove').addEventListener('click', () => {
+      LibraryRenderer.remove(card);
+    });
 
     card.insertBefore(readButton, card.firstChild);
     return card;
