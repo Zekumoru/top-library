@@ -162,6 +162,10 @@ const LibraryRenderer = (() => {
       },
       book,
       (editedBook) => {
+        book.title = editedBook.title;
+        book.author = editedBook.author;
+        book.pages = editedBook.pages;
+        book.read = editedBook.read;
         update(card, editedBook);
       }
       )
