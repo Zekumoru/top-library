@@ -29,13 +29,12 @@ const BookDialog = (() => {
   });
 
   function show(uiTexts, book, onsubmit) {
-    if (book) fill(book);
-
     title.textContent = uiTexts.title;
     buttons.submit.textContent = uiTexts.submit;
 
-    object.onsubmit = onsubmit;
     dialog.style.visibility = 'visible';
+    object.onsubmit = onsubmit;
+    if (book) fill(book);
   }
 
   function fill(book) {
