@@ -1,4 +1,4 @@
-const AddBookDialog = (() => {
+const BookDialog = (() => {
   const object = {};
   const dialog = document.querySelector('.dialog');
   const title = dialog.querySelector('.title');
