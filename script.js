@@ -1,6 +1,8 @@
 const AddBookDialog = (() => {
   const object = {};
   const dialog = document.querySelector('.dialog');
+  const title = dialog.querySelector('.title');
+
   const inputs = {
     title: document.querySelector('#book-title'),
     author: document.querySelector('#book-author'),
@@ -8,12 +10,17 @@ const AddBookDialog = (() => {
     read: document.querySelector('#book-read'),
   };
 
-  dialog.querySelector('button.close').addEventListener('click', () => {
+  const buttons = {
+    submit: dialog.querySelector('button.submit'),
+    close: dialog.querySelector('button.close'),
+  };
+
+  buttons.close.addEventListener('click', () => {
     clear();
     hide();
   });
 
-  dialog.querySelector('button.submit').addEventListener('click', (e) => {
+  buttons.submit.addEventListener('click', (e) => {
     e.preventDefault();
     if (typeof object.onsubmit === 'function') object.onsubmit(submit());
 
@@ -21,8 +28,10 @@ const AddBookDialog = (() => {
     hide();
   });
 
-  function show(onsubmit) {
+  function show(titleText, buttonText, onsubmit) {
     object.onsubmit = onsubmit;
+    title.textContent = titleText;
+    buttons.submit.textContent = buttonText;
     dialog.style.visibility = 'visible';
   }
 
@@ -136,7 +145,7 @@ const LibraryRenderer = (() => {
 })();
 
 document.querySelector('header button.add').addEventListener('click', () => {
-  AddBookDialog.show((book) => {
+  AddBookDialog.show('Edit Book Details', 'Add Book', (book) => {
     LibraryRenderer.add(book);
   });
 });
