@@ -206,7 +206,7 @@ body > .container {
   padding: 32px;
 }
 
-form.add-book {
+.dialog > .wrapper {
   position: relative;
   background-color: var(--main-color);
   width: 600px;
