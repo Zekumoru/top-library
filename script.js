@@ -16,9 +16,13 @@ const AddBookDialog = (() => {
   dialog.querySelector('button.add').addEventListener('click', (e) => {
     e.preventDefault();
     if (typeof object.onsubmit === 'function') object.onsubmit(submit());
+    
+    clear();
+    hide();
   });
 
-  function show() {
+  function show(onsubmit) {
+    object.onsubmit = onsubmit;
     dialog.style.visibility = 'visible';
   }
 
@@ -46,7 +50,6 @@ const AddBookDialog = (() => {
     show,
     hide,
     clear,
-    onsubmit,
   });
 })();
 
@@ -133,11 +136,7 @@ const LibraryRenderer = (() => {
 })();
 
 document.querySelector('header button.add').addEventListener('click', () => {
-  AddBookDialog.show();
+  AddBookDialog.show((book) => {
+    LibraryRenderer.add(book);
+  });
 });
-
-AddBookDialog.onsubmit = (book) => {
-  LibraryRenderer.add(book);
-  AddBookDialog.clear();
-  AddBookDialog.hide();
-};
