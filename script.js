@@ -145,7 +145,7 @@ const LibraryRenderer = (() => {
 })();
 
 document.querySelector('header button.add').addEventListener('click', () => {
-  AddBookDialog.show('Edit Book Details', 'Add Book', (book) => {
+  BookDialog.show('Edit Book Details', 'Add Book', (book) => {
     LibraryRenderer.add(book);
   });
 });
