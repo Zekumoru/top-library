@@ -282,7 +282,7 @@ form.add-book {
   background-color: var(--primary-color-hover);
 }
 
-.dialog button.add {
+.dialog button.submit {
   align-self: flex-end;
 }
 

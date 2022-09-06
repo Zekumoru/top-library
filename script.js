@@ -13,10 +13,10 @@ const AddBookDialog = (() => {
     hide();
   });
 
-  dialog.querySelector('button.add').addEventListener('click', (e) => {
+  dialog.querySelector('button.submit').addEventListener('click', (e) => {
     e.preventDefault();
     if (typeof object.onsubmit === 'function') object.onsubmit(submit());
-    
+
     clear();
     hide();
   });
