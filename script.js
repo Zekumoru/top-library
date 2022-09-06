@@ -28,11 +28,21 @@ const BookDialog = (() => {
     hide();
   });
 
-  function show(titleText, buttonText, onsubmit) {
+  function show(uiTexts, book, onsubmit) {
+    if (book) fill(book);
+
+    title.textContent = uiTexts.title;
+    buttons.submit.textContent = uiTexts.submit;
+
     object.onsubmit = onsubmit;
-    title.textContent = titleText;
-    buttons.submit.textContent = buttonText;
     dialog.style.visibility = 'visible';
+  }
+
+  function fill(book) {
+    inputs.title.value = book.title;
+    inputs.author.value = book.author;
+    inputs.pages.value = book.pages;
+    inputs.read.checked = book.read;
   }
 
   function hide() {
@@ -87,6 +97,24 @@ const LibraryRenderer = (() => {
     onchange();
   }
 
+  function update(card, book) {
+    card.querySelector('.title').textContent = book.title;
+    card.querySelector('.author').textContent = book.author;
+    card.querySelector('.pages').textContent = book.pages;
+
+    const readButton = card.querySelector('button:first-child');
+    if (book.read) {
+      readButton.textContent = 'read';
+      readButton.classList.add('read');
+      readButton.classList.remove('unread');
+    }
+    else {
+      readButton.textContent = 'unread';
+      readButton.classList.add('unread');
+      readButton.classList.remove('read');
+    }
+  }
+
   function remove(card) {
     list.removeChild(card);
     onchange();
@@ -102,11 +130,13 @@ const LibraryRenderer = (() => {
 
     readButton.addEventListener('click', () => {
       if (readButton.textContent === 'read') {
+        book.read = false;
         readButton.textContent = 'unread';
         readButton.classList.remove('read');
         return;
       }
 
+      book.read = true;
       readButton.textContent = 'read';
       readButton.classList.add('read');
     });
@@ -114,7 +144,7 @@ const LibraryRenderer = (() => {
     card.innerHTML = `
       <div class="content">
         <h2 class="title">${book.title}</h2>
-        <p class="author">${book.author} (${book.pages} pages)</p>
+        <p class="description"><span class="author">${book.author}</span> (<span class="pages">${book.pages}</span> pages)</p>
       </div>
       <div class="buttons">
         <button class="edit">
@@ -127,7 +157,15 @@ const LibraryRenderer = (() => {
     ;
 
     card.querySelector('button.edit').addEventListener('click', () => {
-      console.log('edit');
+      BookDialog.show({
+        title: 'Edit Book Details',
+        submit: 'Edit Book',
+      },
+      book,
+      (editedBook) => {
+        update(card, editedBook);
+      }
+      )
     });
 
     card.querySelector('button.remove').addEventListener('click', () => {
@@ -140,12 +178,18 @@ const LibraryRenderer = (() => {
 
   return {
     add,
+    update,
     remove,
   };
 })();
 
 document.querySelector('header button.add').addEventListener('click', () => {
-  BookDialog.show('Edit Book Details', 'Add Book', (book) => {
+  BookDialog.show({
+    title: 'Enter Book Details',
+    submit: 'Add Book',
+  },
+  null,
+  (book) => {
     LibraryRenderer.add(book);
   });
 });

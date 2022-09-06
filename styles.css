@@ -162,7 +162,7 @@ html, body, .container {
   letter-spacing: 0.04rem;
 }
 
-.card .author {
+.card .description {
   color: var(--card-sub-text-color);
   font-size: 0.8rem;
 }
