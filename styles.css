@@ -8,6 +8,7 @@
   --main-color-hover: #F8F8F8;
   --bg-color: #DFE8F0;
   --text-color: #000000;
+  --required-text-color: #D73535;
   --off-bg-color: #EF0000;
   --off-bg-color-hover: #D71B1B;
   --on-bg-color: #1BAA03;
@@ -248,6 +249,24 @@ body > .container {
   display: grid;
   grid-template-columns: 68px 1fr;
   align-items: center;
+  grid-template-areas: 
+    "label input"
+    ".     required";
+}
+
+.dialog p.required {
+  grid-area: required;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--required-text-color);
+}
+
+.dialog input[type="text"].required {
+  border: 1px solid var(--required-text-color);
+}
+
+.dialog input[type="text"].required:focus {
+  border: 1px solid var(--required-text-color);
 }
 
 .dialog input[type="text"],
