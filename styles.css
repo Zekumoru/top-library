@@ -262,11 +262,14 @@ body > .container {
   color: var(--required-text-color);
 }
 
-.dialog input[type="text"].required {
+
+.dialog input[type="text"].required,
+.dialog input[type="number"].required {
   border: 1px solid var(--required-text-color);
 }
 
-.dialog input[type="text"].required:focus {
+.dialog input[type="text"].required:focus,
+.dialog input[type="number"].required:focus {
   border: 1px solid var(--required-text-color);
 }
 

@@ -16,7 +16,7 @@ const BookDialog = (() => {
   const object = {};
   const dialog = document.querySelector('.dialog');
   const title = dialog.querySelector('.title');
-  let aggressive = true;
+  let aggressive = false;
 
   const inputs = {
     title: dialog.querySelector('#book-title'),
@@ -28,6 +28,7 @@ const BookDialog = (() => {
   const requiredParagraphs = {
     title: dialog.querySelector('#book-title + .required'),
     author: dialog.querySelector('#book-author + .required'),
+    pages: dialog.querySelector('#book-pages + .required'),
   };
 
   const buttons = {
@@ -35,8 +36,9 @@ const BookDialog = (() => {
     close: dialog.querySelector('button.close'),
   };
 
-  inputs.title.addEventListener('keyup', () => requireField('title'));
-  inputs.author.addEventListener('keyup', () => requireField('author'));
+  inputs.title.addEventListener('keyup', () => requireField('title', isFieldEmpty));
+  inputs.author.addEventListener('keyup', () => requireField('author', isFieldEmpty));
+  inputs.pages.addEventListener('keyup', () => requireField('pages', isFieldNegative));
 
   buttons.close.addEventListener('click', () => {
     clear();
@@ -45,12 +47,15 @@ const BookDialog = (() => {
 
   buttons.submit.addEventListener('click', (e) => {
     e.preventDefault();
-    if (!inputs.title.value || !inputs.author.value) {
+    
+    if (!inputs.title.value || !inputs.author.value || Number(inputs.pages.value) < 0) {
       aggressive = true;
-      requireField('title');
-      requireField('author');
+      requireField('title', isFieldEmpty);
+      requireField('author', isFieldEmpty);
+      requireField('pages', isFieldNegative);
       return;
     }
+    aggressive = false;
 
     if (typeof object.onsubmit === 'function') object.onsubmit(submit());
 
@@ -58,11 +63,11 @@ const BookDialog = (() => {
     hide();
   });
 
-  function requireField(field) {
+  function requireField(field, condition) {
     const input = inputs[field];
     const requiredParagraph = requiredParagraphs[field];
 
-    if (input.value) {
+    if (!condition(input)) {
       input.classList.remove('required');
       requiredParagraph.style.display = 'none';
       return;
@@ -72,6 +77,14 @@ const BookDialog = (() => {
       input.classList.add('required');
       requiredParagraph.style.display = 'block';
     }
+  }
+
+  function isFieldEmpty(field) {
+    return !field.value;
+  }
+
+  function isFieldNegative(field) {
+    return Number(field.value) < 0;
   }
 
   function show(uiTexts, book, onsubmit) {
