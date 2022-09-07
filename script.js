@@ -70,12 +70,7 @@ const BookDialog = (() => {
   }
 
   function submit() {
-    return {
-      title: inputs.title.value,
-      author: inputs.author.value,
-      pages: inputs.pages.value || 0,
-      read: inputs.read.checked,
-    };
+    return new Book(inputs.title.value, inputs.author.value, inputs.pages.value || 0, inputs.read.checked);
   }
 
   return Object.assign(object, {
@@ -207,6 +202,7 @@ document.querySelector('header button.add').addEventListener('click', () => {
   },
   null,
   (book) => {
+    addBookToLibrary(book);
     LibraryRenderer.add(book);
   });
 });
