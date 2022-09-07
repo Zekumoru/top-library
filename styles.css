@@ -255,6 +255,7 @@ body > .container {
 }
 
 .dialog p.required {
+  display: none;
   grid-area: required;
   margin-top: 4px;
   font-size: 0.8rem;

@@ -16,18 +16,27 @@ const BookDialog = (() => {
   const object = {};
   const dialog = document.querySelector('.dialog');
   const title = dialog.querySelector('.title');
+  let aggressive = true;
 
   const inputs = {
-    title: document.querySelector('#book-title'),
-    author: document.querySelector('#book-author'),
-    pages: document.querySelector('#book-pages'),
-    read: document.querySelector('#book-read'),
+    title: dialog.querySelector('#book-title'),
+    author: dialog.querySelector('#book-author'),
+    pages: dialog.querySelector('#book-pages'),
+    read: dialog.querySelector('#book-read'),
+  };
+
+  const requiredParagraphs = {
+    title: dialog.querySelector('#book-title + .required'),
+    author: dialog.querySelector('#book-author + .required'),
   };
 
   const buttons = {
     submit: dialog.querySelector('button.submit'),
     close: dialog.querySelector('button.close'),
   };
+
+  inputs.title.addEventListener('keyup', () => requireField('title'));
+  inputs.author.addEventListener('keyup', () => requireField('author'));
 
   buttons.close.addEventListener('click', () => {
     clear();
@@ -36,11 +45,34 @@ const BookDialog = (() => {
 
   buttons.submit.addEventListener('click', (e) => {
     e.preventDefault();
+    if (!inputs.title.value || !inputs.author.value) {
+      aggressive = true;
+      requireField('title');
+      requireField('author');
+      return;
+    }
+
     if (typeof object.onsubmit === 'function') object.onsubmit(submit());
 
     clear();
     hide();
   });
+
+  function requireField(field) {
+    const input = inputs[field];
+    const requiredParagraph = requiredParagraphs[field];
+
+    if (input.value) {
+      input.classList.remove('required');
+      requiredParagraph.style.display = 'none';
+      return;
+    }
+
+    if (aggressive) {
+      input.classList.add('required');
+      requiredParagraph.style.display = 'block';
+    }
+  }
 
   function show(uiTexts, book, onsubmit) {
     title.textContent = uiTexts.title;
