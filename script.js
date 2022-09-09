@@ -173,6 +173,10 @@ const LibraryRenderer = (() => {
     }
   }
 
+  function render(library) {
+    library.forEach(add);
+  }
+
   function remove(card) {
     list.removeChild(card);
     onchange();
@@ -242,6 +246,7 @@ const LibraryRenderer = (() => {
   return Object.assign(object, {
     add,
     update,
+    render,
     remove,
   });
 })();
@@ -256,6 +261,18 @@ document.querySelector('header button.add').addEventListener('click', () => {
     addBookToLibrary(book);
     LibraryRenderer.add(book);
   });
+});
+
+document.querySelector('header button.populate').addEventListener('click', () => {
+  const sampleBooks =  [
+    new Book('Clean Code', 'Robert Cecil', 464, false),
+    new Book('The Elements of Computing Systems: Building a Modern Computer from First Principles', 'Noam Nisan and Shimon Schocken', 344, true),
+    new Book('Design Patterns: Elements of Reusable Object-Oriented Software', 'Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides', 416, false),
+    new Book('Structure and Interpretation of Computer Programs', 'Gerald Jay Sussman and Hal Abelson', 657, false),
+  ];
+
+  sampleBooks.forEach((book) => addBookToLibrary(book));
+  LibraryRenderer.render(myLibrary);
 });
 
 LibraryRenderer.onremove = (book) => {
