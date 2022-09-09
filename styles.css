@@ -103,7 +103,7 @@ html, body, .container {
 
 .main {
   background-color: var(--bg-color);
-  overflow: auto;
+  overflow-x: hidden;
 }
 
 .cards {
@@ -113,6 +113,7 @@ html, body, .container {
 }
 
 .card {
+  min-width: 0;
   min-height: 80px;
   background-color: var(--main-color);
   display: flex;
@@ -121,6 +122,7 @@ html, body, .container {
 }
 
 .card .content {
+  min-width: 0;
   flex: 1;
   display: flex;
   padding: 8px;
@@ -155,6 +157,14 @@ html, body, .container {
 
 .card > button.read:hover {
   background-color: var(--on-bg-color-hover);
+}
+
+.card .title,
+.card .description {
+  overflow-wrap: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card .title {
