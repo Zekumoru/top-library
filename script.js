@@ -206,7 +206,7 @@ const LibraryRenderer = (() => {
     card.innerHTML = `
       <div class="content">
         <h2 class="title">${book.title}</h2>
-        <p class="description"><span class="author">${book.author}</span> (<span class="pages">${book.pages}</span> pages)</p>
+        <div class="description"><div class="author">${book.author}</div><div class="pages-container">(<span class="pages">${book.pages}</span> pages)</div></div>
       </div>
       <div class="buttons">
         <button class="edit">
