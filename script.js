@@ -12,6 +12,10 @@ function addBookToLibrary(book) {
   myLibrary.push(book);
 }
 
+function removeBookFromLibrary(book) {
+  myLibrary.splice(myLibrary.indexOf(book), 1);
+}
+
 const BookDialog = (() => {
   const object = {};
   const dialog = document.querySelector('.dialog');
@@ -126,6 +130,7 @@ const BookDialog = (() => {
 })();
 
 const LibraryRenderer = (() => {
+  const object = {};
   const display = document.querySelector('.main');
   const info = document.querySelector('.main .info');
 
@@ -227,17 +232,18 @@ const LibraryRenderer = (() => {
 
     card.querySelector('button.remove').addEventListener('click', () => {
       LibraryRenderer.remove(card);
+      object.onremove(book);
     });
 
     card.insertBefore(readButton, card.firstChild);
     return card;
   }
 
-  return {
+  return Object.assign(object, {
     add,
     update,
     remove,
-  };
+  });
 })();
 
 document.querySelector('header button.add').addEventListener('click', () => {
@@ -251,3 +257,7 @@ document.querySelector('header button.add').addEventListener('click', () => {
     LibraryRenderer.add(book);
   });
 });
+
+LibraryRenderer.onremove = (book) => {
+  removeBookFromLibrary(book);
+};
