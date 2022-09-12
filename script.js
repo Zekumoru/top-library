@@ -17,12 +17,30 @@ function removeBookFromLibrary(book) {
 }
 
 const ElementCreator = (() => {
-  function create(tag, options) {
+  function create(tag, options = {}, children = []) {
     if (typeof options === 'string') {
       options = { className: options };
     }
 
-    return Object.assign(document.createElement(tag), options);
+    if (typeof children === 'string' || typeof children === 'number') {
+      options.textContent = children;
+      children = [];
+    }
+
+    return assign(document.createElement(tag), options, children);
+  }
+
+  function assign(element, options, children) {
+    Object.assign(element, options);
+    children.forEach((child) => {
+      if (typeof child === 'string') {
+        element.appendChild(document.createTextNode(child));
+        return;
+      }
+
+      element.appendChild(child);
+    });
+    return element;
   }
 
   return {
@@ -144,10 +162,79 @@ const BookDialog = (() => {
 })();
 
 const LibraryRenderer = (() => {
-  const object = {};
+  const events = {};
   const display = document.querySelector('.main');
   const info = document.querySelector('.main .info');
   const list = ElementCreator.create('ul', 'cards');
+
+  const Card = (() => {
+    const events = {};
+
+    function createReadButton(read) {
+      return ElementCreator.create('button', {
+        textContent: read? 'read' : 'unread',
+        classList: read? ['read'] : [],
+      });
+    }
+
+    function onReadButtonClick(book) {
+      if (this.textContent === 'read') {
+        book.read = false;
+        this.textContent = 'unread';
+        this.classList.remove('read');
+        return;
+      }
+
+      book.read = true;
+      this.textContent = 'read';
+      this.classList.add('read');
+    }
+
+    function createContent(book) {
+      return ElementCreator.create('div', 'content', [
+        ElementCreator.create('h2', 'title', book.title),
+        ElementCreator.create('div', 'description', [
+          ElementCreator.create('div', 'author', book.author),
+          ElementCreator.create('div', 'pages-container', [
+            '(',
+            ElementCreator.create('span', 'pages', book.pages),
+            ' pages)',
+          ]),
+        ]),
+      ]);
+    }
+
+    function createButtons() {
+      return ElementCreator.create('div', 'buttons', [
+        ElementCreator.create('button', 'edit', [
+          ElementCreator.create('div', 'icon edit'),
+        ]),
+        ElementCreator.create('button', 'remove', [
+          ElementCreator.create('div', 'icon delete'),
+        ]),
+      ]);
+    }
+
+    function create(book) {
+      const readButton = createReadButton(book.read);
+      const buttons = createButtons();
+      const card =  ElementCreator.create('li', 'card', [
+        readButton,
+        createContent(book),
+        buttons,
+      ]);
+
+      readButton.addEventListener('click', onReadButtonClick.bind(readButton, book));
+      buttons.querySelector('button.edit').addEventListener('click', () => card.onedit(card, book));
+      buttons.querySelector('button.remove').addEventListener('click', () => card.onremove(card, book));
+
+      return card;
+    }
+
+    return {
+      create,
+    };
+  })();
 
   const onchange = () => {
     if (list.childElementCount) {
@@ -163,7 +250,31 @@ const LibraryRenderer = (() => {
   };
 
   function add(book) {
-    list.appendChild(createCard(book));
+    const card = Card.create(book);
+
+    card.onedit = (card, book) => {
+      BookDialog.show({
+          title: 'Edit Book Details',
+          submit: 'Edit Book',
+        },
+        book,
+        (editedBook) => {
+          book.title = editedBook.title;
+          book.author = editedBook.author;
+          book.pages = editedBook.pages;
+          book.read = editedBook.read;
+          update(card, editedBook);
+        },
+      );
+    };
+
+    card.onremove = (card, book) => {
+      remove(card);
+      events.onremove(book);
+    };
+
+    list.appendChild(card);
+
     onchange();
   }
 
@@ -194,68 +305,7 @@ const LibraryRenderer = (() => {
     onchange();
   }
 
-  function createCard(book) {
-    const card = ElementCreator.create('li', 'card');
-
-    const readButton = ElementCreator.create('button', {
-      textContent: book.read? 'read' : 'unread',
-      classList: book.read? ['read'] : [],
-    });
-
-    readButton.addEventListener('click', () => {
-      if (readButton.textContent === 'read') {
-        book.read = false;
-        readButton.textContent = 'unread';
-        readButton.classList.remove('read');
-        return;
-      }
-
-      book.read = true;
-      readButton.textContent = 'read';
-      readButton.classList.add('read');
-    });
-
-    card.innerHTML = `
-      <div class="content">
-        <h2 class="title">${book.title}</h2>
-        <div class="description"><div class="author">${book.author}</div><div class="pages-container">(<span class="pages">${book.pages}</span> pages)</div></div>
-      </div>
-      <div class="buttons">
-        <button class="edit">
-          <div class="icon edit"></div>
-        </button>
-        <button class="remove">
-          <div class="icon delete"></div>
-        </button>
-      </div>`
-    ;
-
-    card.querySelector('button.edit').addEventListener('click', () => {
-      BookDialog.show({
-        title: 'Edit Book Details',
-        submit: 'Edit Book',
-      },
-      book,
-      (editedBook) => {
-        book.title = editedBook.title;
-        book.author = editedBook.author;
-        book.pages = editedBook.pages;
-        book.read = editedBook.read;
-        update(card, editedBook);
-      }
-      )
-    });
-
-    card.querySelector('button.remove').addEventListener('click', () => {
-      LibraryRenderer.remove(card);
-      object.onremove(book);
-    });
-
-    card.insertBefore(readButton, card.firstChild);
-    return card;
-  }
-
-  return Object.assign(object, {
+  return Object.assign(events, {
     add,
     update,
     render,
