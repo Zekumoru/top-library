@@ -16,6 +16,16 @@ function removeBookFromLibrary(book) {
   myLibrary.splice(myLibrary.indexOf(book), 1);
 }
 
+const ElementCreator = (() => {
+  function create(tag, options) {
+    return Object.assign(document.createElement(tag), options);
+  }
+
+  return {
+    create,
+  };
+})();
+
 const BookDialog = (() => {
   const object = {};
   const dialog = document.querySelector('.dialog');
@@ -133,9 +143,7 @@ const LibraryRenderer = (() => {
   const object = {};
   const display = document.querySelector('.main');
   const info = document.querySelector('.main .info');
-
-  const list = document.createElement('ul');
-  list.classList.add('cards');
+  const list = ElementCreator.create('ul', { classList: [ 'cards' ] });
 
   const onchange = () => {
     if (list.childElementCount) {
@@ -183,12 +191,14 @@ const LibraryRenderer = (() => {
   }
 
   function createCard(book) {
-    const card = document.createElement('li');
-    card.classList.add('card');
+    const card = ElementCreator.create('li', {
+      classList: ['card'],
+    });
 
-    const readButton = document.createElement('button');
-    readButton.textContent = book.read? 'read' : 'unread';
-    if (book.read) readButton.classList.add('read');
+    const readButton = ElementCreator.create('button', {
+      textContent: book.read? 'read' : 'unread',
+      classList: book.read? ['read'] : [],
+    });
 
     readButton.addEventListener('click', () => {
       if (readButton.textContent === 'read') {
