@@ -297,6 +297,7 @@ const LibraryRenderer = (() => {
   }
 
   function render(library) {
+    list.innerHTML = '';
     library.forEach(add);
   }
 
@@ -326,7 +327,7 @@ document.querySelector('header button.add').addEventListener('click', () => {
 });
 
 document.querySelector('header button.populate').addEventListener('click', () => {
-  const sampleBooks =  [
+  const sampleBooks = [
     new Book('Clean Code', 'Robert Cecil', 464, false),
     new Book('The Elements of Computing Systems: Building a Modern Computer from First Principles', 'Noam Nisan and Shimon Schocken', 344, true),
     new Book('Design Patterns: Elements of Reusable Object-Oriented Software', 'Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides', 416, false),
