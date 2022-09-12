@@ -18,6 +18,10 @@ function removeBookFromLibrary(book) {
 
 const ElementCreator = (() => {
   function create(tag, options) {
+    if (typeof options === 'string') {
+      options = { className: options };
+    }
+
     return Object.assign(document.createElement(tag), options);
   }
 
@@ -143,7 +147,7 @@ const LibraryRenderer = (() => {
   const object = {};
   const display = document.querySelector('.main');
   const info = document.querySelector('.main .info');
-  const list = ElementCreator.create('ul', { classList: [ 'cards' ] });
+  const list = ElementCreator.create('ul', 'cards');
 
   const onchange = () => {
     if (list.childElementCount) {
@@ -191,9 +195,7 @@ const LibraryRenderer = (() => {
   }
 
   function createCard(book) {
-    const card = ElementCreator.create('li', {
-      classList: ['card'],
-    });
+    const card = ElementCreator.create('li', 'card');
 
     const readButton = ElementCreator.create('button', {
       textContent: book.read? 'read' : 'unread',
