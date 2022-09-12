@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Radio Canada');
 
 :root {
-  --primary-color: #00A6EF;
+  --primary-color: #005d86;
   --primary-color-hover: rgb(9, 161, 226);
   --primary-text-color: #FFFFFF;
   --main-color: #FFFFFF;
   --main-color-hover: #F8F8F8;
-  --bg-color: #DFE8F0;
+  --bg-color: #d0d9e1;
   --text-color: #000000;
   --required-text-color: #D73535;
-  --off-bg-color: #EF0000;
-  --off-bg-color-hover: #D71B1B;
-  --on-bg-color: #1BAA03;
-  --on-bg-color-hover: #20a209;
+  --off-bg-color: #bf1029;
+  --off-bg-color-hover: #cc102c;
+  --on-bg-color: #056517;
+  --on-bg-color-hover: #046b17;
   --switch-bg-color: #d2d2d2;
   --dialog-font-color: #3d3d3d;
   --card-sub-text-color: #939393;
@@ -54,7 +54,7 @@ html, body, .container {
 }
 
 .aside {
-  background-color: #00A6EF;
+  background-color: var(--primary-color);
   color: var(--primary-text-color);
   position: relative;
 }
