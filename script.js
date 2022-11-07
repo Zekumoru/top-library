@@ -51,6 +51,7 @@ const ElementCreator = (() => {
 const BookDialog = (() => {
   const object = {};
   const dialog = document.querySelector('.dialog');
+  const form = dialog.querySelector('form');
   const title = dialog.querySelector('.title');
   let aggressive = false;
 
@@ -72,55 +73,53 @@ const BookDialog = (() => {
     close: dialog.querySelector('button.close'),
   };
 
-  inputs.title.addEventListener('keyup', () => requireField('title', isFieldEmpty));
-  inputs.author.addEventListener('keyup', () => requireField('author', isFieldEmpty));
-  inputs.pages.addEventListener('keyup', () => requireField('pages', isFieldNegative));
-
-  buttons.close.addEventListener('click', () => {
-    clear();
-    hide();
+  inputs.title.addEventListener('invalid', (e) => require(e.target, requiredParagraphs.title));
+  inputs.title.addEventListener('keyup', (e) => {
+    if (!e.target.checkValidity()) return;
+    removeRequired(e.target, requiredParagraphs.title);
   });
-
-  buttons.submit.addEventListener('click', (e) => {
+  
+  inputs.author.addEventListener('invalid', (e) => require(e.target, requiredParagraphs.author));
+  inputs.author.addEventListener('keyup', (e) => {
+    if (!e.target.checkValidity()) return;
+    removeRequired(e.target, requiredParagraphs.author);
+  });
+  
+  inputs.pages.addEventListener('invalid', (e) => require(e.target, requiredParagraphs.pages));
+  inputs.pages.addEventListener('keyup', (e) => {
+    if (!e.target.checkValidity()) return;
+    removeRequired(e.target, requiredParagraphs.pages);
+  });
+  
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
+    aggressive = true;
     
-    if (!inputs.title.value || !inputs.author.value || Number(inputs.pages.value) < 0) {
-      aggressive = true;
-      requireField('title', isFieldEmpty);
-      requireField('author', isFieldEmpty);
-      requireField('pages', isFieldNegative);
-      return;
-    }
+    const valid = inputs.title.checkValidity() & inputs.author.checkValidity() & inputs.pages.checkValidity();
+    if (!valid) return;
+    
     aggressive = false;
-
     if (typeof object.onsubmit === 'function') object.onsubmit(submit());
 
     clear();
     hide();
   });
 
-  function requireField(field, condition) {
-    const input = inputs[field];
-    const requiredParagraph = requiredParagraphs[field];
-
-    if (!condition(input)) {
-      input.classList.remove('required');
-      requiredParagraph.style.display = 'none';
-      return;
-    }
-
+  buttons.close.addEventListener('click', () => {
+    clear();
+    hide();
+  });
+  
+  function require(field, requiredParagraph) {
     if (aggressive) {
-      input.classList.add('required');
+      field.classList.add('required');
       requiredParagraph.style.display = 'block';
     }
   }
 
-  function isFieldEmpty(field) {
-    return !field.value;
-  }
-
-  function isFieldNegative(field) {
-    return Number(field.value) < 0;
+  function removeRequired(field, requiredParagraph) {
+    field.classList.remove('required');
+    requiredParagraph.style.display = 'none';
   }
 
   function show(uiTexts, book, onsubmit) {
